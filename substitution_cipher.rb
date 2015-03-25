@@ -1,4 +1,4 @@
-module SubstitutionCipher
+*/module SubstitutionCipher
   module Caeser
     # Encrypts document using key
     # Arguments:
@@ -8,7 +8,7 @@ module SubstitutionCipher
     def self.encrypt(document, key)
       # TODO: encrypt string using caeser cipher
     end
-
+      
     # Decrypts String document using integer key
     # Arguments:
     #   document: String
