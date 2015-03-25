@@ -7,8 +7,9 @@
     # Returns: String
     def self.encrypt(document, key)
       # TODO: encrypt string using caeser cipher
+      ch.to_s.chars.map{|p| (((p.ord - 32)+ offset) %95 +32).chr}.join
     end
-      
+
     # Decrypts String document using integer key
     # Arguments:
     #   document: String
@@ -16,6 +17,7 @@
     # Returns: String
     def self.decrypt(document, key)
       # TODO: decrypt string using caeser cipher
+      ch.to_s.chars.map{|p| (((p.ord - 32) - offset) %95 +32).chr}.join
     end
   end
 
