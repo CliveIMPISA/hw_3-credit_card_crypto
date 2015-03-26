@@ -23,7 +23,7 @@ module LuhnValidator
       end
       counter += 1
     end
-    (sum *=9) % 10 == nums_a.first
+    (sum *= 9) % 10 == nums_a.first
     # TODO: use the integers in nums_a to validate its last check digit
   end
 end
