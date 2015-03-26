@@ -32,9 +32,9 @@ module SubstitutionCipher
     # Returns: String
     def self.encrypt(document, key)
       # TODO: encrypt string using caeser cipher
-      cipher = (0...128).to_a.map { |p| p.chr }
+      cipher = (0...128).to_a
       a = cipher.shuffle(random: Random.new(key))
-      document.to_s.chars.map { |p| a[cipher.index(p)] }.join
+      document.to_s.chars.map{|p| a[p.ord].chr}.join
     end
 
     # Decrypts String document using integer key
