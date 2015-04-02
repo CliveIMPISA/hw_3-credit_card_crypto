@@ -38,9 +38,17 @@ describe 'Test card info encryption' do
       enc.wont_equal @pt.to_s
     end
 
-    # it 'Should return decrypted text' do
-    #
-    # end
+    it 'Should return decrypted text' do
+      enc = AesCipher.encrypt(@pt,@key3)
+      dec = AesCipher.decrypt(enc,@key3)
+      dec.must_equal @pt.to_s
+    end
+
+    it 'Should not decrypt because of incorrect password' do
+      enc = AesCipher.encrypt(@pt,@key3)
+      dec = AesCipher.decrypt(enc,"@key3dfdfdggbgbgbgbgbgbgb")
+      dec.wont_equal @pt.to_s
+    end
   end
 
   describe 'Using Caeser cipher' do
