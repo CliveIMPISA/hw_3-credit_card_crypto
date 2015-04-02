@@ -1,4 +1,5 @@
 require 'openssl'
+require 'json'
 
 module AesCipher
   def self.encrypt(document, key)
