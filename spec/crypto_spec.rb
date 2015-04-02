@@ -1,11 +1,46 @@
 require_relative '../credit_card'
 require_relative '../substitution_cipher'
+require_relative '../double_trans_cipher'
+require_relative '../aes_cipher'
 require 'minitest/autorun'
 
 describe 'Test card info encryption' do
   before do
     @cc = CreditCard.new('4916603231464963', 'Mar-30-2020', 'Soumya Ray', 'Visa')
     @key = 3
+    @pt = "Please encrypt this really important message! It is a secret"
+    @key2 = 8
+    @key3 = "My secret Password"
+  end
+
+  describe 'Using Double Transposition Cipher' do
+    it 'Should encrypt any text provided' do
+      enc =  DoubleTranspositionCipher.encrypt(@pt,@key2)
+      enc.wont_equal @pt.to_s
+    end
+
+    it 'Should return decrypted text' do
+      enc =  DoubleTranspositionCipher.encrypt(@pt,@key2)
+      dec =  DoubleTranspositionCipher.decrypt(enc, @key2)
+      dec.must_equal @pt.to_s
+    end
+
+    it 'Should not decrypt because password was incorrect' do
+      enc =  DoubleTranspositionCipher.encrypt(@pt,@key2)
+      dec =  DoubleTranspositionCipher.decrypt(enc, 5)
+      dec.wont_equal @pt.to_s
+    end
+  end
+
+  describe 'Using AES Cipher' do
+    it 'Should encrypt any text provided' do
+      enc = AesCipher.encrypt(@pt,@key3)
+      enc.wont_equal @pt.to_s
+    end
+
+    # it 'Should return decrypted text' do
+    #
+    # end
   end
 
   describe 'Using Caeser cipher' do
