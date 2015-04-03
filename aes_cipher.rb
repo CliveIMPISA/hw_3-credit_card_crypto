@@ -10,8 +10,10 @@ module AesCipher
       iv = cipher.random_iv
       ciphertext = cipher.update(document) + cipher.final
       output = [ iv.unpack("H*"),ciphertext.unpack("H*")]
-    rescue
+    rescue  OpenSSL::Cipher::CipherError => e
       "Passphrase too short! Should be at least 16 characters long"
+    rescue Exception => e
+      "unknown error"
     else
       output.to_json
     end
