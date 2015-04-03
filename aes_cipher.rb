@@ -26,8 +26,10 @@ module AesCipher
       decrypter.iv = JSON.parse(aes_crypt)[0].pack("H*")
       ciphertext = JSON.parse(aes_crypt)[1].pack("H*")
       plain = decrypter.update(ciphertext) + decrypter.final
-    rescue
+    rescue OpenSSL::Cipher::CipherError => e
       "Error! Incorrect PassPhrase Enter. Please Try Again"
+    rescue Exception => e
+      "unknown error"
     else
       plain
     end
