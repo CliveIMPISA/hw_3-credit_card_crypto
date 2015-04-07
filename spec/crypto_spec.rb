@@ -2,7 +2,10 @@ require_relative '../credit_card'
 require_relative '../substitution_cipher'
 require_relative '../double_trans_cipher'
 require_relative '../aes_cipher'
+require 'yaml'
 require 'minitest/autorun'
+
+password = YAML.load_file 'spec/test_passwords.yml'
 
 describe 'Test card info encryption' do
   before do
@@ -32,22 +35,28 @@ describe 'Test card info encryption' do
     end
   end
 
-  describe 'Using AES Cipher' do
-    it 'Should encrypt any text provided' do
-      enc = AesCipher.encrypt(@pt,@key3)
-      enc.wont_equal @pt.to_s
-    end
+  password['valid'].each do |pass|
+    describe "Testing AES Cipher happy paths" do
+      it "Should encrypt any text provided" do
+        enc = AesCipher.encrypt(@pt,pass)
+        enc.wont_equal @pt.to_s
+      end
 
-    it 'Should return decrypted text' do
-      enc = AesCipher.encrypt(@pt,@key3)
-      dec = AesCipher.decrypt(enc,@key3)
-      dec.must_equal @pt.to_s
+      it 'Should return decrypted text' do
+        enc = AesCipher.encrypt(@pt,pass)
+        dec = AesCipher.decrypt(enc,pass)
+        dec.must_equal @pt.to_s
+      end
     end
+  end
 
-    it 'Should not decrypt because of incorrect password' do
-      enc = AesCipher.encrypt(@pt,@key3)
-      dec = AesCipher.decrypt(enc,"@key3dfdfdggbgbgbgbgbgbgb")
-      dec.wont_equal @pt.to_s
+  password['invalid'].each do |pass|
+    describe "Testing AES sad paths" do
+      it "Should not decrypt because of incorrect password" do
+        enc = AesCipher.encrypt(@pt,@key3)
+        dec = AesCipher.decrypt(enc,pass)
+        dec.wont_equal @pt.to_s
+      end
     end
   end
 
