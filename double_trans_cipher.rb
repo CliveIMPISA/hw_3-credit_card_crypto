@@ -17,7 +17,7 @@ module DoubleTranspositionCipher
     end
     doc = document.to_s.chars.to_a.each_slice(col).to_a
     doc = doc.shuffle(random: Random.new(key))
-    doc.map! {|p| p.shuffle(random: Random.new(key))}
+    doc.map! { |p| p.shuffle(random: Random.new(key)) }
     doc.join
   end
 
@@ -28,8 +28,6 @@ module DoubleTranspositionCipher
     row = Math.sqrt(doc_length).round
     decipher_arr = (1..doc_length).to_a
 
-
-
     if row == Math.sqrt(doc_length).to_i
       col = row
     else
@@ -38,13 +36,13 @@ module DoubleTranspositionCipher
     decipher_arr =  decipher_arr.each_slice(col).to_a
     decipher_arr = decipher_arr.shuffle(random: Random.new(key))
 
-    decipher_arr.map! { |p| p.shuffle(random: Random.new(key))}
+    decipher_arr.map! { |p| p.shuffle(random: Random.new(key)) }
 
     decipher_arr = decipher_arr.flatten
 
     counter = 1
     plaintext = []
-    decipher_arr.each do |m|
+    decipher_arr.each do
       plaintext << ciphertext[decipher_arr.index(counter)]
       counter += 1
     end

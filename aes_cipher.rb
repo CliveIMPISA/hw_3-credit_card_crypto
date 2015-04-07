@@ -1,6 +1,7 @@
 require 'openssl'
 require 'json'
 
+# Aes Cipher module
 module AesCipher
   def self.encrypt(document, key)
     begin
@@ -9,11 +10,9 @@ module AesCipher
       cipher.key = key.to_s
       iv = cipher.random_iv
       ciphertext = cipher.update(document) + cipher.final
-      output = [ iv.unpack("H*"),ciphertext.unpack("H*")]
-    rescue  OpenSSL::Cipher::CipherError => e
-      "Passphrase too short! Should be at least 16 characters long"
-    rescue Exception => e
-      "unknown error"
+      output = [iv.unpack('H*'), ciphertext.unpack('H*')]
+    rescue  OpenSSL::Cipher::CipherError
+      'Passphrase too short! Should be at least 16 characters long'
     else
       output.to_json
     end
@@ -25,13 +24,11 @@ module AesCipher
       decrypter = OpenSSL::Cipher::AES.new(128, :CBC)
       decrypter.decrypt
       decrypter.key = key.to_s
-      decrypter.iv = JSON.parse(aes_crypt)[0].pack("H*")
-      ciphertext = JSON.parse(aes_crypt)[1].pack("H*")
+      decrypter.iv = JSON.parse(aes_crypt)[0].pack('H*')
+      ciphertext = JSON.parse(aes_crypt)[1].pack('H*')
       plain = decrypter.update(ciphertext) + decrypter.final
-    rescue OpenSSL::Cipher::CipherError => e
-      "Error! Incorrect PassPhrase Enter. Please Try Again"
-    rescue Exception => e
-      "unknown error"
+    rescue OpenSSL::Cipher::CipherError
+      'Error! Incorrect PassPhrase Enter. Please Try Again'
     else
       plain
     end
