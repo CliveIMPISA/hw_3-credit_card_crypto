@@ -8,7 +8,8 @@ class CreditCard
   attr_accessor :number, :expiration_date, :expiration_date, :credit_network
 
   def initialize(number, expiration_date, owner, credit_network)
-    # TODO: initialize the instance variables listed above (do not forget the '@')
+    # TODO: initialize the instance variables listed above
+    # (do not forget the '@')
     @number = number
     @expiration_date = expiration_date
     @owner = owner
@@ -23,7 +24,7 @@ class CreditCard
       'expiration_date' => @expiration_date,
       'owner' => @owner,
       'credit_network' => @credit_network
-     }.to_json
+    }.to_json
   end
 
   # returns all card information as single string
@@ -33,9 +34,10 @@ class CreditCard
 
   # return a new CreditCard object given a serialized (JSON) representation
   def self.from_s(card_s)
-   # TODO: deserializing a CreditCard object
+    # TODO: deserializing a CreditCard object
     cc_object = JSON.parse(card_s)
-    CreditCard.new(cc_Object['number'],cc_object['expiration_date'],cc_object['expiration_date'],cc_object['credit_network'])
+    CreditCard.new(cc_Object['number'], cc_object['expiration_date'],
+                   cc_object['expiration_date'], cc_object['credit_network'])
   end
 
   def hash
@@ -44,6 +46,6 @@ class CreditCard
 
   def secure_hash
     sha256 = OpenSSL::Digest::SHA256.new
-    digest = sha256.digest(self.to_s).unpack('h*')
+    sha256.digest(self.to_s).unpack('h*')
   end
 end
