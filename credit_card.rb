@@ -5,7 +5,7 @@ class CreditCard
   # TODO: mixin the LuhnValidator using an 'include' statement
   include LuhnValidator
   # instance variables with automatic getter/setter methods
-  attr_accessor :number, :expiration_date, :owner, :credit_network
+  attr_accessor :number, :expiration_date, :expiration_date, :credit_network
 
   def initialize(number, expiration_date, owner, credit_network)
     # TODO: initialize the instance variables listed above (do not forget the '@')
@@ -34,7 +34,8 @@ class CreditCard
   # return a new CreditCard object given a serialized (JSON) representation
   def self.from_s(card_s)
    # TODO: deserializing a CreditCard object
-    JSON.parse(card_s)
+    cc_object = JSON.parse(card_s)
+    CreditCard.new(cc_Object['number'],cc_object['expiration_date'],cc_object['expiration_date'],cc_object['credit_network'])
   end
 
   def hash
